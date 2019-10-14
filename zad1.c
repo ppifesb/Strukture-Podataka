@@ -11,7 +11,7 @@ typedef struct {
 	float r_bodovi;
 }_student;
 
-int	RowCount(void);
+int RowCount(void);
 int ReadingFromFile(_student *, int);
 void Print(_student *);
 
