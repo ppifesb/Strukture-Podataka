@@ -24,7 +24,7 @@ int main()
 	broj_redaka = RowCount();
 	if (broj_redaka == -1){
 		printf("Greska u citanju iz datoteke!");
-		goto exit;
+		return -1;
 	}
 
 	p_student = (_student *)malloc(broj_redaka * sizeof(_student));
@@ -32,13 +32,12 @@ int main()
 	check = ReadingFromFile(p_student, broj_redaka);
 
 	if (check == -1)
-		goto exit;
+		return -1;
 
 	printf("Bodovi (R/A)\t\tIme Prezime\n");
 	for (i = 0; i < broj_redaka; i++)
 		Print(p_student + i);
 
-exit:
 	system("PAUSE");
 	return 0;
 }
