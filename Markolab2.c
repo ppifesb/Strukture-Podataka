@@ -23,8 +23,7 @@ ptr PronadiPrethodni(ptr,ptr);
 int main() {
 	struct Osoba Head;
 	Head.veza = NULL;
-	fflush(stdin);
-
+	
 	UnosP(&Head);
 	UnosP(&Head);
 	UnosK(&Head);
