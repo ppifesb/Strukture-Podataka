@@ -196,17 +196,12 @@ _Student *Pronadi(_Student *Head, char *buffer)
 	_Student *P = Head->next;
 
 	if (P == NULL) {
-		printf("\n***Lista je prazna!!***\n");
+		printf("\n***Lista je prazna!! / Element nije pronaden!!***\n");
 		return NULL;
 	}
 
 	while (P != NULL && strcmp(buffer, P->prezime))
 		P = P->next;
-
-	if (P == NULL) {
-		printf("\n***Element nije pronaden!!***\n");
-		return NULL;
-	}
 
 	return P;
 }
