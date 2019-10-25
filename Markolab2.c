@@ -218,3 +218,38 @@ ptr PronadiPrethodni(ptr P,ptr R) {
 	else
 	    return Temp;
 }
+
+
+void Unos_Dat(ptr P) {
+	FILE *ptr_f = NULL;
+	
+	ptr Temp;
+
+	int check = 0;
+
+	Temp = P;
+
+	ptr_f = fopen("citaj.txt", "r");
+
+	if (ptr_f == NULL) {
+		printf("Greska pri otvaranju datoteke");
+		return -1;
+	}
+
+	if (P->veza == NULL) {
+		printf("Lista nema elemenata");
+		return 0;
+	}
+
+	P = P->veza;
+
+	while (P != NULL && feof(ptr_f)==0) {
+		check=fscanf("%s %s %d", P->ime, P->prezime, P->godina_rodenja);
+		if (check == EOF) {
+			printf("Greska pri ucitavanju iz datoteke");
+			return -1;
+		}
+	}
+
+	
+}
