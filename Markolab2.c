@@ -21,19 +21,66 @@ ptr PronadiPrethodni(ptr,ptr);
 
 
 int main() {
-	struct Osoba Head;
-	Head.veza = NULL;
-	
-	UnosP(&Head);
-	UnosP(&Head);
-	UnosK(&Head);
-	Ispis(&Head);
-	Brisi(Trazi(&Head),&Head);
-	Ispis(&Head);
 
-	
+	char odabir=NULL,provjera=NULL;
+
+	struct Osoba Head;
+
+	int c;
+
+	Head.veza = NULL;
+
+	do {
+
+		printf("Unesite:P(unos na pocetak),K(unos na kraj),I(ispis liste),T(trazi element i brisi istovremeno):");
+
+		scanf("%c", &odabir);
+
+		if (islower(odabir)!=0)
+			odabir = (char)toupper(odabir);
+
+		switch (odabir) {
+		     case 'P':
+			   UnosP(&Head);
+			   puts("");
+			   break;
+
+		     case 'K':
+			  UnosK(&Head);
+		          break;
+
+		     case 'I':
+			  Ispis(&Head);
+			  puts("");
+			  break;
+
+		     case 'T':
+			  printf("Trazenje te Brisanje elementa\n");
+			  Brisi(Trazi(&Head), &Head);
+			  break;
+
+		     default:
+		         printf("Greska,unijeli ste krivo slovo\n");
+			 break;
+		}
+
+		while ((c = getchar()) != '\n' && c != EOF);
+
+		printf("Zelite li unijeti jos elemenata(D za Da,N za Ne):");
+		scanf("%c", &provjera);
+
+		if (islower(provjera) != 0)
+		provjera = (char)toupper(provjera);
+
+		while ((c = getchar()) != '\n' && c != EOF);
+
+
+	} while (provjera != 'N');
+
 	system("PAUSE");
+
 	return 0;
+
 }
 
 void UnosP(ptr P) {
@@ -57,7 +104,6 @@ void UnosP(ptr P) {
 
 	else
 		P->veza = NULL;
-	
 
 }
 
