@@ -50,6 +50,13 @@ ptr MaksimalniEl(ptr);
 
 void Upis_Dat(ptr);
 
+void Ucitavanje_Dat(ptr);
+
+void Provjera_ucitavanja(int);
+
+int Brojac();
+
+void UnosP_Dat(ptr);
 
 int main() {
 
@@ -57,11 +64,13 @@ int main() {
 
 	struct Osoba Head;
 
+	struct Osoba Head_dat;
+
 	int c;
-
-	//FILE* ptr=NULL;
-
+	
 	Head.veza = NULL;
+
+	Head_dat.veza = NULL;
 
 	do {
 
@@ -123,31 +132,17 @@ int main() {
 	} while (provjera != 'N');
 
 
-	/*Sortiranje(&Head);
+	Sortiranje(&Head);
 
 	printf("Ispis sortirane liste\n\n");
 
 	Ispis(&Head);
-    */
-
-	/*ptr = fopen("vezanalista.txt", "w");
-
-	if (ptr == NULL) {
-		printf("Greska pri otvaranju datoteke");
-		return -1;
-	}
-
-	ptr = fclose("vezanalista.txt");
-
-	if (ptr == EOF) {
-		printf("Greska pri zatvaranju datoteke");
-		return -1;
-	}
-
-
-	Upis_Dat(&Head,"vezanalista.txt");*/
-
+    
 	Upis_Dat(&Head);
+
+	printf("\nUcitavanje iz datoteke\n");
+
+	Ucitavanje_Dat(&Head_dat);
 
 	system("PAUSE");
 
@@ -401,7 +396,7 @@ void DodajIspred(ptr P) {
 	UnosP(Temp);
 }
 
-/*void Sortiranje(ptr P) {
+void Sortiranje(ptr P) {
 	ptr Temp = NULL, Pomocna = NULL, Var = NULL,Dodatna=NULL;
 	int brojac = 0;
 	
@@ -447,9 +442,9 @@ void DodajIspred(ptr P) {
 		}
 		
 	}
-}*/
+}
 
-/*ptr Zamjena(ptr Zamjenik, ptr Zamjenitelj, ptr Prethodni) {
+ptr Zamjena(ptr Zamjenik, ptr Zamjenitelj, ptr Prethodni) {
 
 	ptr Temp = NULL;
 
@@ -463,10 +458,10 @@ void DodajIspred(ptr P) {
 
 	return Zamjenik;
 
-}*/
+}
 
-/*ptr MinimalniEl(ptr P) {
-	ptr Minimalni=NULL,Pomocna=NULL;
+ptr MinimalniEl(ptr P) {
+	ptr Minimalni=NULL,Pomocna=NULL,brojac=0;
 
 	if (P->veza == NULL) {
 		printf("Lista nema elemenata");
@@ -477,24 +472,24 @@ void DodajIspred(ptr P) {
 	Minimalni = P;
 
 	while ((P != NULL) && (P->veza)!= NULL) {
-		if (strcmp(P->prezime, P->veza->prezime) > 0)
+		if (strcmp(P->prezime, P->veza->prezime) > 0) {
 			Minimalni = P->veza;
+			brojac++;
+		}
 
-		else if (strcmp(P->prezime, P->veza->prezime) < 0)
-			Minimalni =Pomocna;
-
-		else
-			Minimalni = Pomocna;
-	
 		P = P->veza;
 	}
+	if (brojac > 0)
+		return Minimalni;
+	else
+		return P;
 	
-	return Minimalni;
-}*/
+}
 
-/*ptr MaksimalniEl(ptr P) {
+ptr MaksimalniEl(ptr P) {
 
 	ptr Maksimalni = NULL,Pomocna=NULL;
+	int brojac = 0;
 
 	Pomocna = P;
 
@@ -507,18 +502,18 @@ void DodajIspred(ptr P) {
 	Maksimalni = P;
 
 	while ((P != NULL) && P->veza!=NULL) {
-		if (strcmp(P->prezime, P->veza->prezime) > 0)
-			Maksimalni = Pomocna;
-		else if (strcmp(P->prezime, P->veza->prezime) < 0)
+		if (strcmp(P->prezime, P->veza->prezime) < 0) {
 			Maksimalni = P->veza;
-		else
-			Maksimalni = Pomocna;
+			brojac++;
+		}
+
 		P = P->veza;
 	}
-	
-	return Maksimalni;
-	
-}*/
+	if (brojac > 0)
+		return Maksimalni;
+	else
+		return P;
+}
 
 void Upis_Dat(ptr P) {
 	FILE* ptr = NULL;
@@ -537,7 +532,7 @@ void Upis_Dat(ptr P) {
 	}
 
 
-	provjera=fprintf(ptr, "Ime\t\tPrezime\t\t\tGodina rodenja\n");
+	provjera=fprintf(ptr, "Ime\t\tPrezime\t\tGodina rodenja\n");
 
 	if (provjera < 0) {
 		printf("Greska pri pisanju u datoteku(1)");
@@ -548,7 +543,7 @@ void Upis_Dat(ptr P) {
 	P = P->veza;
 
 	while (P != NULL && feof(ptr) == 0) {
-		check=fprintf(ptr, "%s\t\t%s\t\t\t%d\n", P->ime, P->prezime, P->godina_rodenja);
+		check=fprintf(ptr, "%s\t%s\t%d\n", P->ime, P->prezime, P->godina_rodenja);
 		if (check < 0) {
 			printf("Greska pri pisanju u datoteku(2)");
 			return -1;
@@ -563,4 +558,112 @@ void Upis_Dat(ptr P) {
 		printf("Greska pri zatvaranju datoteke");
 		return -1;
 	}
+}
+
+
+void Ucitavanje_Dat(ptr P) {
+
+	FILE* pok = NULL;
+	int provjera = 0, brojac = 0,i,check=0;
+	ptr Temp = NULL;
+
+	Temp = P;
+
+	brojac = Brojac();
+	
+	for (i = 0; i < brojac; i++)
+		UnosP_Dat(P);
+
+
+		pok = fopen("studenti.txt", "r");
+
+		if (pok == NULL) {
+			printf("Greska pri otvaranju datoteke");
+			return -1;
+		}
+
+		rewind(pok);
+
+		P = P->veza;
+
+		do {
+			provjera = fscanf(pok, "%s%s%d", P->ime, P->prezime, &P->godina_rodenja);
+			Provjera_ucitavanja(provjera);
+			P = P->veza;
+
+		} while ((feof(pok) == 0) && (P != NULL));
+
+		Ispis(Temp);
+
+		check = fclose(pok);
+
+		if (check == EOF) {
+			printf("Greska pri zatvaranju datoteke u fji Ucitavanje_Dat");
+			return -1;
+		}
+
+	}
+
+void Provjera_ucitavanja(int povratna_vr) {
+
+	if (povratna_vr == EOF) {
+		printf("Greska pri ucitavanju");
+		return -1;
+	}
+
+}
+
+int Brojac()
+{
+	FILE* pok=NULL;
+	char buffer[128];
+	int brojac = 0,provjera=0;
+
+	pok = fopen("Studenti.txt", "r");
+
+	if (pok == NULL) {
+		printf("Greska pri otvaranju datoteke");
+		return -1;
+	}
+
+
+	do {
+		fgets(buffer, 128, pok);
+
+		if (strlen(buffer) != 0)
+			brojac++;
+
+		memset(buffer, '\0', 128);
+
+	} while (feof(pok) == 0);
+
+	provjera = fclose(pok);
+
+	if (provjera == EOF) {
+		printf("Greska pri zatvaranju datoteke u fji Brojac");
+		return -1;
+	}
+
+	return brojac;
+}
+
+void UnosP_Dat(ptr P) {
+
+	ptr Temp=NULL;
+
+	Temp = P->veza;
+
+	P->veza = (ptr)malloc(1 * sizeof(struct Osoba));
+	if (P == NULL) {
+		printf("Greska pri alociranju memorije");
+		return -1;
+
+	}
+
+	P = P->veza;
+
+	if (Temp != NULL)
+		P->veza = Temp;
+	else
+		P->veza = NULL;
 }
