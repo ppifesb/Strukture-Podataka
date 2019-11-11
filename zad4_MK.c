@@ -47,25 +47,25 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 	secondHead->next = NULL;
 
 	if (check = ReadRow(&firstCounter) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -3;
 	}
 	if (check = ReadRow(&secondCounter) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -3;
 	}
 	if (check = PolinomsToListEntry(firstHead, firstCounter) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -4;
 	}
 	if (check = PolinomsToListEntry(secondHead, secondCounter) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -4;
@@ -76,7 +76,7 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 		return -1;
 
 	if (check = Print(firstHead) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -5;
@@ -86,7 +86,7 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 		return -1;
 	Print(secondHead);
 	if (check = Print(secondHead) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -5;
@@ -97,13 +97,13 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 		return -1;
 	thirdHead = ThirdListMaker(firstHead, secondHead);
 	if (thirdHead < 0) {
-		check = printf("\n***ERROR: %d", (int)thirdHead);
+		check = printf("\n***ERROR: %d***\n", (int)thirdHead);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -6;
 	}
 	if (check = Print(thirdHead) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -5;
@@ -114,13 +114,13 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 		return -1;
 	finalHead = Multiplicator(thirdHead, &firstCounter, &secondCounter);
 	if (finalHead < 0) {
-		check = printf("\n***ERROR: %d", (int)finalHead);
+		check = printf("\n***ERROR: %d***\n", (int)finalHead);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -7;
 	}
 	if (check = Print(finalHead) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -5;
@@ -130,13 +130,13 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 	if (PrintfAndScanfCheck(check, 1))
 		return -1;
 	if (check = Sort(finalHead) != 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -8;
 	}
 	if (check = Print(finalHead) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -5;
@@ -147,14 +147,14 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 		return -1;
 	finalHead = Addition(finalHead);
 	if (finalHead == 1 || finalHead == -1) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -9;
 	}
 	
 	if (check = Print(finalHead) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -5;
@@ -164,13 +164,13 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 	if (PrintfAndScanfCheck(check, 1))
 		return -1;
 	if (check = Sort(finalHead) != 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -8;
 	}
 	if (check = Print(thirdHead) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -5;
@@ -181,13 +181,13 @@ int main() // Return: -1 -> printf error; -2 -> Allocation error; -3 -> ReadRow 
 		return -1;
 	thirdHead = Addition(thirdHead);
 	if (thirdHead == 1 || thirdHead == -1) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -9;
 	}
 	if (check = Print(thirdHead) < 0) {
-		check = printf("\n***ERROR: %d", check);
+		check = printf("\n***ERROR: %d***\n", check);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
 		return -5;
@@ -289,12 +289,12 @@ int BufferCheck(char* buffer) // Return: 1 -> buffer == '\n'; 0 -> buffer != '\n
 
 	return 0;
 }
-int Print(_polinom* Head) //-1 -> printf error; -2 -> List is empty; 0 -> All good
+int Print(_polinom* head) //-1 -> printf error; -2 -> List is empty; 0 -> All good
 {
-	_polinom* PointToElement = Head->next;
+	_polinom* pointToElement = head->next;
 	int check = 0;
 
-	if (Head->next == NULL) {
+	if (head->next == NULL) {
 		ListCheck(-1);
 		return 1;
 	}
@@ -303,16 +303,16 @@ int Print(_polinom* Head) //-1 -> printf error; -2 -> List is empty; 0 -> All go
 	if (PrintfAndScanfCheck(check, 1))
 		return -1;
 
-	while (PointToElement != NULL) {
-		check = printf(" %dx^%d ", PointToElement->coefficient, PointToElement->exponent);
+	while (pointToElement != NULL) {
+		check = printf(" %dx^%d ", pointToElement->coefficient, pointToElement->exponent);
 		if (PrintfAndScanfCheck(check, 1))
 			return -1;
-		if (PointToElement->next != NULL) {
+		if (pointToElement->next != NULL) {
 			check = printf("+");
 			if (PrintfAndScanfCheck(check, 1))
 				return -1;
 		}
-		PointToElement = PointToElement->next;
+		pointToElement = pointToElement->next;
 	}
 	check = printf("\n");
 	if (PrintfAndScanfCheck(check, 1))
@@ -320,35 +320,35 @@ int Print(_polinom* Head) //-1 -> printf error; -2 -> List is empty; 0 -> All go
 
 	return 0;
 }
-int Sort(_polinom* Head) // Return: 1 -> Empty list; 0 -> All good
+int Sort(_polinom* head) // Return: 1 -> Empty list; 0 -> All good
 {
-	_polinom* prevElement = Head;
-	_polinom* Element = Head->next;
-	_polinom* postElement = Head->next->next;
-	_polinom* End = NULL;
+	_polinom* prevElement = head;
+	_polinom* element = head->next;
+	_polinom* postElement = head->next->next;
+	_polinom* end = NULL;
 
-	if (Head->next == NULL) {
+	if (head->next == NULL) {
 		ListCheck(-1);
 		return 1;
 	}
 
-	while (prevElement->next != End) {
-		while (postElement != End) {
-			if (Element->exponent < postElement->exponent) {
-				prevElement = Switch(prevElement, Element, postElement);
-				Element = prevElement->next;
-				postElement = Element->next;
+	while (prevElement->next != end) {
+		while (postElement != end) {
+			if (element->exponent < postElement->exponent) {
+				prevElement = Switch(prevElement, element, postElement);
+				element = prevElement->next;
+				postElement = element->next;
 			}
 			else {
 				postElement = postElement->next;
-				Element = Element->next;
+				element = element->next;
 				prevElement = prevElement->next;
 			}
 		}
-		End = Element;
-		prevElement = Head;
-		Element = Head->next;
-		postElement = Head->next->next;
+		end = element;
+		prevElement = head;
+		element = head->next;
+		postElement = head->next->next;
 	}
 
 	return 0;
@@ -372,25 +372,25 @@ int FprintfAndFscanfCheck(int fprintfCheck, int fscanfCheck)// Return: -1 -> fpr
 
 	return 0;
 }
-int EraseElement(_polinom* Element, _polinom* Head) // Return: -1 -> printf error; 1 -> Empty list; 2 -> No element; 0 -> All good;
+int EraseElement(_polinom* element, _polinom* head) // Return: -1 -> printf error; 1 -> Empty list; 2 -> No element; 0 -> All good;
 {
-	_polinom* PointToElement = Head;
+	_polinom* pointToElement = head;
 	int check = 0;
 
-	if (PointToElement == NULL) {
+	if (pointToElement == NULL) {
 		ListCheck(-1);
 		return 1;
 	}
-	while (PointToElement != NULL && PointToElement->next != Element)
-		PointToElement = PointToElement->next;
+	while (pointToElement != NULL && pointToElement->next != element)
+		pointToElement = pointToElement->next;
 
-	if (PointToElement == NULL) {
+	if (pointToElement == NULL) {
 		ListCheck(-2);
 		return 2;
 	}
 
-	PointToElement->next = Element->next;
-	free(Element);
+	pointToElement->next = element->next;
+	free(element);
 
 	return 0;
 }
@@ -398,7 +398,7 @@ _polinom* PolinomsToListEntry(_polinom* head, int rowCounter) //Return: 1 -> Emp
 {
 	FILE* polinomFile = fopen("polinoms.txt", "r");
 	_polinom* pointToElement = NULL;
-	_polinom* NewElement = NULL;
+	_polinom* newElement = NULL;
 	char buffer[1024] = { 0 };
 	int check = 0;
 	static int counter = 0;
@@ -433,11 +433,11 @@ _polinom* PolinomsToListEntry(_polinom* head, int rowCounter) //Return: 1 -> Emp
 				}
 		if (rowCounter == 1)
 			counter++;
-		if (!(NewElement = Allocation(NewElement)))
+		if (!(newElement = Allocation(newElement)))
 			return -3;
 		pointToElement = MoveToEnd(pointToElement);
-		Linker(pointToElement, NewElement);
-		check = fscanf(polinomFile, "%d %d", &NewElement->exponent, &NewElement->coefficient);
+		Linker(pointToElement, newElement);
+		check = fscanf(polinomFile, "%d %d", &newElement->exponent, &newElement->coefficient);
 		if (check == EOF) {
 			FprintfAndFscanfCheck(0, EOF);
 			return -4;
@@ -447,25 +447,25 @@ _polinom* PolinomsToListEntry(_polinom* head, int rowCounter) //Return: 1 -> Emp
 
 	return 0;
 }
-_polinom* Allocation(_polinom* Element)//NULL -> Allocation error; Element -> All good;
+_polinom* Allocation(_polinom* element)//NULL -> Allocation error; Element -> All good;
 {
 	int check = 0;
 
-	Element = (_polinom*)malloc(sizeof(_polinom));
-	if (Element == NULL) {
+	element = (_polinom*)malloc(sizeof(_polinom));
+	if (element == NULL) {
 		check = printf("***Greska u alociranju memorije!***");
 		PrintfAndScanfCheck(check, 1);
 		return NULL;
 	}
 
-	return Element;
+	return element;
 }
-_polinom* MoveToEnd(_polinom* PointToElement) //Moving pointer to the end of the list;
+_polinom* MoveToEnd(_polinom* pointToElement) //Moving pointer to the end of the list;
 {
-	while (PointToElement->next != NULL)
-		PointToElement = PointToElement->next;
+	while (pointToElement->next != NULL)
+		pointToElement = pointToElement->next;
 
-	return PointToElement;
+	return pointToElement;
 }
 _polinom* ThirdListMaker(_polinom* firstHead, _polinom* secondHead)// Return: -1 -> Allocation error; 0 -> All good;
 {
@@ -576,16 +576,16 @@ _polinom* Linker(_polinom* previousElement, _polinom* nextElement)
 
 	return nextElement;
 }
-_polinom* Switch(_polinom* Prev_P, _polinom* P, _polinom* Post_P)
+_polinom* Switch(_polinom* prevP, _polinom* p, _polinom* postP)
 {
-	Prev_P->next = Post_P;
-	P->next = Post_P->next;
-	Post_P->next = P;
+	prevP->next = postP;
+	p->next = postP->next;
+	postP->next = p;
 
-	Post_P = P->next;
-	Prev_P = Prev_P->next;
+	postP = p->next;
+	prevP = prevP->next;
 
-	return Prev_P;
+	return prevP;
 }
 _polinom* ListCheck(int check)//Return: NULL -> List error;
 {							  //Arguments: -1 -> Empty list; -2 -> Element not found
