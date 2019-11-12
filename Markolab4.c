@@ -1,5 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
 
 typedef struct Polinom* pointer;
 struct Polinom {
@@ -63,13 +64,6 @@ void ReadingFromFile(pointer head_p1,pointer head_p2)
 	}
 
 	Save_Elements(head_p1,head_p2);
-
-
-	PrintElements(head_p1);
-
-	puts("");
-
-	PrintElements(head_p2);
 }
 
 int Counter(int *brojac2_ptr) {
@@ -119,15 +113,20 @@ int Counter(int *brojac2_ptr) {
 						;
 					temporary_var = 0;
 					temporary_var1 = 0;
-
 					ptr_buffer = fgets(buffer, 128, pointer);
 
-				} while (feof(pointer) == 0);
+					if(feof(pointer)!=0){
+						check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
+						if (check == 2)
+						(*brojac2_ptr)++;
+						
+					}
+
+				} while(feof(pointer) == 0);
 			}
 
 			else
 				;
-		
 	
 	} while (feof(pointer) == 0);
 
@@ -183,6 +182,11 @@ void Save_Elements(pointer head_p1,pointer head_p2) {
 	char* ptr_buffer;
 	int counter = 0;
 	int counter1 = 0;
+	pointer temp_head_p1;
+	pointer temp_head_p2;
+
+	temp_head_p1=head_p1;
+	temp_head_p2=head_p2;
 
 	ptr = fopen("polinomi.txt", "r");
 	if (ptr == NULL) {
@@ -207,7 +211,7 @@ void Save_Elements(pointer head_p1,pointer head_p2) {
 		ptr_buffer = fgets(buffer, 128, ptr);
 		check = 0;
 		check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
-		if (check == 2 && strlen(buffer) != 0) {
+		if (check == 2) {
 			head_p1->koeficijent = temporary_var;
 			head_p1->eksponent = temporary_var1;
 			temporary_var = 0;
@@ -218,8 +222,7 @@ void Save_Elements(pointer head_p1,pointer head_p2) {
 		else if (check != 2) {
 			check = 0;
 			ptr_buffer = fgets(buffer, 128, ptr);
-			do {
-				check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
+			check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
 				if (check == 2) {
 					head_p2->koeficijent = temporary_var;
 					head_p2->eksponent = temporary_var1;
@@ -231,21 +234,25 @@ void Save_Elements(pointer head_p1,pointer head_p2) {
 				temporary_var1 = 0;
 
 				ptr_buffer = fgets(buffer, 128, ptr);
-				
+		}
 				if(counter!=0)
 				head_p1 = head_p1->Next;
+
+				if(feof(ptr)!=0){
+					check=0;
+					check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
+					if (check == 2) {
+					head_p2->koeficijent = temporary_var;
+					head_p2->eksponent = temporary_var1;
+				}
 
 				if(counter1!=0)
 				head_p2 = head_p2->Next;
 
-			} while (feof(ptr) == 0 && (head_p1 != NULL) && (head_p2 != NULL));
-		}
+				}
 
-		else
-			;
-
-
-	} while (feof(ptr) == 0);
+	} while (feof(ptr) == 0 && (head_p1 != NULL) && (head_p2 != NULL));
+		
 
 	check = fclose(ptr);
 
@@ -253,5 +260,9 @@ void Save_Elements(pointer head_p1,pointer head_p2) {
 		printf("Greska pri zatvaranju datoteke u fji Counter\n");
 		return -1;
 	}
-	
+
+
+	PrintElements(temp_head_p1);
+	puts("");
+	PrintElements(temp_head_p2);
 }
