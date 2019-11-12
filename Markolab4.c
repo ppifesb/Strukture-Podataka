@@ -1,4 +1,4 @@
-#include<stdio.h>
+##include<stdio.h>
 #include<stdlib.h>
 
 typedef struct Polinom* pointer;
@@ -8,60 +8,78 @@ struct Polinom {
 	pointer Next;
 };
 
-void ReadingFromFile(pointer);
-int Counter();
+void ReadingFromFile(pointer,pointer);
+int Counter(int *);
 void SetElementOnBeg(pointer);
 void PrintElements(pointer);
-void Save_Elements(pointer);
-void Replace(pointer, pointer,pointer);
-pointer FindFollower(pointer, pointer);
-pointer Minimum(pointer);
-pointer Maximum(pointer);
-void SortElements(pointer);
-void SumOfElements(pointer);
+void Save_Elements(pointer,pointer);
 
 int main() {
-	struct Polinom Head;
+	struct Polinom head;
 
-	struct Polinom Polinom;
+	struct Polinom polinom;
 
-	Head.Next = NULL;
+	head.Next = NULL;
 
-	Polinom.Next = NULL;
+	polinom.Next = NULL;
 
-	ReadingFromFile(&Head);
-
-	ReadingFromFile(&Polinom);
+	ReadingFromFile(&head,&polinom);
 
 	system("PAUSE");
 
 	return 0;
 }
 
-void ReadingFromFile(pointer Head)
+void ReadingFromFile(pointer head_p1,pointer head_p2)
 {
 	FILE* pointer=NULL;
-	int check=0,brojac=0,i;
+	int check = 0;
+	int brojac1 = 0;
+	int brojac2 = 0;
+	int* brojac2_ptr;
+	int i;
 
-	brojac = Counter();
+	brojac2_ptr = &brojac2;
 
-	for (i = 0; i < brojac; i++)
-		SetElementOnBeg(Head);
+	brojac1 = Counter(brojac2_ptr);
 
-	if (Head->Next == NULL) {
+	printf("%d\n", brojac1);
+	printf("%d\n\n", brojac2);
+
+	for (i = 0; i < brojac1; i++)
+		SetElementOnBeg(head_p1);
+
+	for (i = 0; i < brojac2; i++)
+		SetElementOnBeg(head_p2);
+
+	if (head_p1->Next == NULL) {
 		printf("Greska u fji ReadingFromFile pri postavljanju clanova\n");
 		return -1;
 	}
 
-	Save_Elements(Head);
+	if (head_p2->Next == NULL) {
+		printf("Greska u fji ReadingFromFile pri postavljanju clanova\n");
+		return -1;
+	}
 
-	PrintElements(Head);
+	Save_Elements(head_p1,head_p2);
+
+
+	PrintElements(head_p1);
+
+	puts("");
+
+	PrintElements(head_p2);
 }
 
-int Counter() {
+int Counter(int *brojac2_ptr) {
 	FILE* pointer = NULL;
-	int check, brojac = 0,temporary_var=0,temporary_var1=0;
+	int check = 0;
+	int brojac1 = 0;
+	int temporary_var = 0;
+	int  temporary_var1 = 0;
 	char buffer[128];
+	char* ptr_buffer;
 
 	pointer = fopen("polinomi.txt", "r");
 	if (pointer == NULL) {
@@ -81,19 +99,39 @@ int Counter() {
 	}
 
 	do {
-		check = fscanf(pointer, "%d %d", &temporary_var, &temporary_var1);
-		if (check == 2)
-			brojac++;
-		else
-		{
-			printf("Greska pri ucitavanju iz datoteke u fji Counter\n");
-			return -1;
-		}
-		temporary_var = 0;
-		temporary_var1 = 0;
+		ptr_buffer = fgets(buffer, 128, pointer);
+		    check = 0;
+			check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
+			if (check == 2 && strlen(buffer)!=0) {
+				brojac1++;
+				temporary_var = 0;
+				temporary_var1 = 0;
+			}
+
+			else if (check != 2) {
+				check = 0;
+				ptr_buffer = fgets(buffer, 128, pointer);
+				do {
+					check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
+					if (check == 2)
+						(*brojac2_ptr)++;
+					else
+						;
+					temporary_var = 0;
+					temporary_var1 = 0;
+
+					ptr_buffer = fgets(buffer, 128, pointer);
+
+				} while (feof(pointer) == 0);
+			}
+
+			else
+				;
+		
 	
 	} while (feof(pointer) == 0);
 
+	
 
 	check = fclose(pointer);
 
@@ -102,7 +140,7 @@ int Counter() {
 		return -1;
 	}
 
-	return brojac;
+	return brojac1;
 
 }
 
@@ -118,10 +156,7 @@ void SetElementOnBeg(pointer Head) {
 	}
 	Head = Head->Next;
 
-	if (Temporary_var != NULL)
-		Head->Next = Temporary_var;
-	else
-		Head->Next = NULL;
+	Head->Next = Temporary_var;
 }
 
 void PrintElements(pointer Head) {
@@ -138,13 +173,16 @@ void PrintElements(pointer Head) {
 	}
 }
 
-void Save_Elements(pointer Head) {
+void Save_Elements(pointer head_p1,pointer head_p2) {
 
 	FILE* ptr = NULL;
 	int check = 0;
-	pointer Temporary_head = NULL;
-
-	Temporary_head = Head;
+	int temporary_var = 0;
+	int temporary_var1 = 0;
+	char buffer[128];
+	char* ptr_buffer;
+	int counter = 0;
+	int counter1 = 0;
 
 	ptr = fopen("polinomi.txt", "r");
 	if (ptr == NULL) {
@@ -163,22 +201,51 @@ void Save_Elements(pointer Head) {
 		return -1;
 	}
 
-	Head = Head->Next;
+	head_p1 = head_p1->Next;
+	head_p2 = head_p2->Next;
+	do {
+		ptr_buffer = fgets(buffer, 128, ptr);
+		check = 0;
+		check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
+		if (check == 2 && strlen(buffer) != 0) {
+			head_p1->koeficijent = temporary_var;
+			head_p1->eksponent = temporary_var1;
+			temporary_var = 0;
+			temporary_var1 = 0;
+			counter++;
+		}
 
-		do {
+		else if (check != 2) {
+			check = 0;
+			ptr_buffer = fgets(buffer, 128, ptr);
+			do {
+				check = sscanf(buffer, "%d %d", &temporary_var, &temporary_var1);
+				if (check == 2) {
+					head_p2->koeficijent = temporary_var;
+					head_p2->eksponent = temporary_var1;
+					counter1++;
+				}
+				else
+					;
+				temporary_var = 0;
+				temporary_var1 = 0;
 
-			check = fscanf(ptr, "%d %d", &Head->koeficijent, &Head->eksponent);
-			if (check == EOF || check == 0 || check != 2) {
-				printf("Greska pri ucitavanju elemenata iz datoteke u fji Save_Elements\n");
-				return -1;
-			}
+				ptr_buffer = fgets(buffer, 128, ptr);
+				
+				if(counter!=0)
+				head_p1 = head_p1->Next;
 
-			Head = Head->Next;
+				if(counter1!=0)
+				head_p2 = head_p2->Next;
 
-		} while (feof(ptr) == 0 && Head != NULL);
+			} while (feof(ptr) == 0 && (head_p1 != NULL) && (head_p2 != NULL));
+		}
+
+		else
+			;
 
 
-		SortElements(Temporary_head);
+	} while (feof(ptr) == 0);
 
 	check = fclose(ptr);
 
@@ -186,159 +253,5 @@ void Save_Elements(pointer Head) {
 		printf("Greska pri zatvaranju datoteke u fji Counter\n");
 		return -1;
 	}
-
-}
-
-
-pointer FindFollower(pointer Head, pointer Following) {
 	
-	if (Head->Next == NULL) {
-		printf("Lista nema elemenata");
-		return 0;
-	}
-
-	while (Head != NULL) {
-		if (Head->Next == Following) 
-			return Head;
-		Head = Head->Next;
-	}
-
-	printf("Prethodni nije pronaden\n");
-	return -1;
-}
-
-pointer Minimum(pointer Head) {
-	pointer Minimum = NULL;
-
-
-	if (Head->Next == NULL) {
-		printf("Lista nema elemenata");
-		return 0;
-	}
-
-	Head = Head->Next;
-
-	Minimum = Head;
-
-	while ( Head->Next!=NULL) {
-		if (Minimum->eksponent > Head->Next->eksponent)
-			Minimum = Head;
-
-		Head = Head->Next;
-	}
-
-	if (Minimum->eksponent > Head->eksponent)
-		return Head;
-
-
-	else if (Minimum->eksponent < Head->eksponent)
-		return Minimum;
-
-	else {
-		printf("Greska,minimum nije pronaden");
-		return -1;
-	}
-
-}
-
-pointer Maximum(pointer Head) {
-	pointer Maximum = NULL;
-
-
-	if (Head->Next == NULL) {
-		printf("Lista nema elemenata");
-		return 0;
-	}
-
-	Head = Head->Next;
-
-	Maximum = Head;
-
-	while (Head->Next != NULL ) {
-		if (Maximum->eksponent < Head->Next->eksponent)
-			Maximum = Head;
-
-		Head = Head->Next;
-	}
-
-	if (Maximum->eksponent < Head->eksponent)
-		return Head;
-
-	else if (Maximum->eksponent > Head->eksponent)
-		return Maximum;
-
-	else{
-		printf("Greska,maksimum nije pronaden");
-		return -1;
-	}
-
-}
-
-
-void SortElements(pointer Head) {
-
-	pointer Maximum_el = NULL, Minimum_el = NULL, Follower_max = NULL, Temporary_head = NULL;
-
-	if (Head->Next == NULL) {
-		printf("Lista nema elemenata(fja SortElements)");
-		return 0;
-	}
-
-	Temporary_head = Head;
-
-	Maximum_el = Maximum(Head);
-
-	Minimum_el = Minimum(Head);
-
-	Follower_max = FindFollower(Head,Maximum_el);
-
-	if (Follower_max == NULL) {
-		printf("Greska u fji SortElements,prethodni nije pronaden\n");
-		return -1;
-	}
-
-	Head = Head->Next;
-
-	do {
-		if (Head->Next==NULL)
-			Head = Temporary_head;
-
-		if (Head->Next->eksponent > Head->eksponent)
-			Replace(Head->Next, Head, Temporary_head);
-
-		Head = Head->Next;
-
-
-	} while (Temporary_head->Next != Maximum && Follower_max->Next != Maximum_el); 
-			
-		
-	PrintElements(Temporary_head);
-
-}
-
-void Replace(pointer ToBeReplaced, pointer Replacer, pointer Head) {
-	pointer Follower_replacer = NULL, Temporary_var = NULL;
-
-	if (Head->Next == NULL) {
-		printf("Greska u fji Replace,lista nema elemenata");
-		return 0;
-	}
-
-	Temporary_var = ToBeReplaced->Next;
-
-	Follower_replacer = FindFollower(Head, Replacer);
-
-	Follower_replacer->Next = ToBeReplaced;
-
-	ToBeReplaced->Next = Replacer;
-
-	Replacer->Next = Temporary_var;
-
-}
-
-void SumOfElements(pointer Head) {
-	if (Head->Next == NULL) {
-		printf("Greska,lista nema elemenata");
-		return -1;
-	}
 }
