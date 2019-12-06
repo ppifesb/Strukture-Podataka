@@ -124,11 +124,9 @@ int Push(_Element* head) //Return: -1 -> Allocation error; element->number -> Al
 	element = Allocation(element);
 	if (element == NULL)
 		return -1;
-
 	element->number = (rand() % (LOWER - UPPER + 1) + LOWER);
-
 	Linker(head, element);
-
+	
 	return element->number;
 }
 int PushLoop(_Element* head, char* buffer)//Return: -1 -> Allocation error; -2 -> Printf/Scanf error; 0 -> All good
