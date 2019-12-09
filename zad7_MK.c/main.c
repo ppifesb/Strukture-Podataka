@@ -212,7 +212,7 @@ int BufferCheck(_Stack* head, char buffer)//Returns number(value) of operation
 }
 /******************Memory functions********************/
 _Stack* Allocation(_Stack* Element)//Argument: Pointer to structure
-{								   //Return: NULL -> Allocation error; Element -> All good
+{				   //Return: NULL -> Allocation error; Element -> All good
 	Element = (_Stack*)malloc(sizeof(_Stack));
 	if (Element == NULL) {
 		PrintfAndScanfCheck(printf("%s", ALLOCATION_ERROR), 1);
