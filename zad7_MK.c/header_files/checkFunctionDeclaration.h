@@ -2,7 +2,8 @@
 #define CHECK_FUNCTIONS_DECLARATION
 
 int FileCheck(int);
-int BufferCheck(_Stack* head, char buffer);
+int OperationCheck(char operation);
 int PrintfAndScanfCheck(int, int);
+int OptionChooser(char* stringBuffer, int* numberOfBytesReadedInTotal);
 
 #endif
